@@ -67,6 +67,7 @@ html {
 body {
   background: url("http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469749593/table_top_background_ewasqt.jpg");
   background-size: cover;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 .game-bottom {
@@ -148,6 +149,40 @@ body {
   border-radius: 0 0 100% 0;
 }
 
+.menu {
+  width: 135px;
+  height: 135px;
+  border-radius: 135px;
+  background: #dcdcdc;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -67.5px 0 0 -67.5px;
+}
+
+.menu p {
+  font-size: 3em;
+  margin: 0 auto;
+  position: absolute;
+  top: 25%;
+  left: 22%;
+  margin: -10px 0 0 -10px;
+}
+
+@media screen and (min-width: 550px){
+  .menu {
+    width: 270px;
+    height: 270px;
+    border-radius: 270px;
+    margin: -135px 0 0 -135px;
+  }
+
+  .menu p {
+    font-size: 6em;
+    left: 17%;
+  }
+}
 /*
 .top-two-buttons,
 .bottom-two-buttons {
