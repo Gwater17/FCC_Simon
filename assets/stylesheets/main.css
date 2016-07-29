@@ -60,8 +60,30 @@ html {
   box-sizing: inherit;
 }
 
+:root{
+  font-size: 62.5%;
+}
 /*************Layout***************/
+body {
+  background: url("http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469749593/table_top_background_ewasqt.jpg");
+  background-size: cover;
+}
 
+.game-bottom {
+  background: #333;
+  width: 285px;
+  height: 285px;
+  border-radius: 100%;  
+  margin: 76px auto;
+
+}
+
+@media screen and (min-width: 500px) {
+  .game-bottom {
+    width: 475px;
+    height: 475px;
+  }
+}
 
 /*************Module***************/
 
