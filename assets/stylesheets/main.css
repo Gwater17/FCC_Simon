@@ -1,4 +1,4 @@
-/*************Base***************/
+************Base***************/
 
 /*CSS Reset*/
 
@@ -70,40 +70,123 @@ body {
 }
 
 .game-bottom {
-  background: #333;
-  width: 285px;
-  height: 285px;
+  background: #222;
+  width: 300px;
+  height: 300px;
   border-radius: 100%;  
   margin: 76px auto;
+  position: relative;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 550px) {
   .game-bottom {
-    width: 475px;
-    height: 475px;
+    width: 500px;
+    height: 500px;
   }
 }
 
+.circle-in-bottom {
+  /*display: inline-block;*/
+  width: 270px;
+  height: 270px;
+  border-radius: 100%;
+  /*background: pink;*/
+  background: #222;
+  /*margin: 25px;*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -135px 0 0 -135px;
+}
+
+@media screen and (min-width: 550px) {
+  .circle-in-bottom {
+    width: calc(5/3 * 270px);
+    height: calc(5/3 * 270px);
+    margin-top: calc(-5/3 *135px);
+    margin-left: calc(-5/3 *135px);
+  }
+}
+
+.red-button,
+.green-button,
+.blue-button,
+.yellow-button {
+  display: inline-block;
+  /*width:  48.88888888888888%;*/
+  /*height: 48.88888888888888%;*/
+  width: 47%;
+  height: 47%;
+}
+
+.red-button {
+  /*width: 48%;*/
+  /*height: 48%;*/
+  background: red;
+  border-radius: 100% 0 0 0;
+  margin-right: 6%;
+}
+
+.green-button {
+  background: green;
+  border-radius: 0 100% 0 0;
+}
+
+.blue-button,
+.yellow-button {
+  margin-top: 6%;
+}
+
+.blue-button {
+  background: #09f;
+  border-radius: 0 0 0 100%;
+  margin-right: 6%;
+}
+
+.yellow-button {
+  background: yellow;
+  border-radius: 0 0 100% 0;
+}
+
+/*
 .top-two-buttons,
 .bottom-two-buttons {
   width: 100%;
   height: 50%;
   background: #333;
 }
-
 .top-two-buttons {
-  /*background: green;*/
-  border-radius: 285px 285px 0 0;
+  background: pink;
+  border-radius: 300px 300px 0 0;
 }
 
 .bottom-two-buttons {
-  /*background: pink;*/
-  border-radius: 0 0 285px 285px;
+  background: orange;
+  border-radius: 0 0 300px 300px;
 }
+
+/*
+.top-left-button,
+.top-right-button {
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+}
+
+.top-left-button {
+  background: green;
+  border-radius: 100% 0 0 0;
+}
+
+.top-right-button {
+  background: red;
+  border-radius: 0 100% 0 0;
+}
+*/
 
 /*************Module***************/
 
 
 /*************State***************/
 
-/*************Theme***************/
+/*************Theme**************
