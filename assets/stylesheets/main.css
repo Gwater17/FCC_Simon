@@ -149,6 +149,10 @@ body {
   border-radius: 0 0 100% 0;
 }
 
+/**************
+Menu
+**************/
+
 .menu {
   width: 135px;
   height: 135px;
@@ -168,6 +172,174 @@ body {
   top: 25%;
   left: 22%;
   margin: -10px 0 0 -10px;
+}
+
+.strict-light {
+  width: 6px;
+  height: 6px;
+  background: #222;
+  border-radius: 6px;
+  position: absolute;
+  top: 130px;
+  left: 165px;
+  z-index: 2;
+}
+
+.count-start-strict{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0 0 0 -100px;
+    z-index: 2;
+  }
+  .count-start-strict-buttons{
+  display: block;
+  }
+
+  .count-start-strict p {
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+  .count-start-strict p {
+  display: inline-block;
+  font-size: 7px;
+  }
+
+  .count-start-strict p {
+  margin-left: 5px;
+  }
+
+  .count-start-strict p:first-of-type {
+  margin-left: 51px;
+  }
+
+  .count-start-strict p:last-of-type {
+  margin-left: 5px;
+  }
+
+  .count-display {
+  width: 32px;
+  height: 20px;
+  border-radius: 8px;
+  background: #222;
+  display: inline-block;
+  margin-left: 50px;
+  }
+
+  .start-button,
+  .strict-button {
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    border: 2px solid #222;
+    display: inline-block;
+    margin-left: 12px;
+  }
+  .start-button {
+  background: red;
+  }
+  .strict-button {
+  background: yellow;
+  }
+
+@media screen and (min-width: 550px){
+
+  .strict-light {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    top: 215px;
+    left: 293px;
+  }
+
+  .count-start-strict{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0 0 0 -100px;
+    z-index: 2;
+  }
+  .count-start-strict-buttons{
+  display: block;
+  }
+
+  .count-start-strict p {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 1em;
+}
+
+  .count-start-strict p {
+  display: inline-block;
+  text-transform: uppercase;
+  }
+
+  .count-start-strict p {
+  margin-left: 35px;
+  }
+
+  .count-start-strict p:first-of-type {
+  margin-left: 11px;
+  }
+
+  .count-start-strict p:last-of-type {
+  margin-left: 25px;
+  }
+
+  .count-display {
+  width: 58px;
+  height: 32px;
+  border-radius: 8px;
+  background: #222;
+  display: inline-block;
+  margin-left: 0;
+  }
+
+  .start-button,
+  .strict-button {
+    width: 28px;
+    height: 28px;
+    border-radius: 24px;
+    border: 4px solid #222;
+    display: inline-block;
+    margin-left: 33px;
+  }
+  .start-button {
+  background: red;
+  }
+  .strict-button {
+  background: yellow;
+  }
+}
+
+
+
+.power-switch {
+  display: inline-block;
+}
+
+.power-switch p {
+  display: inline-block;
+}
+
+.off-on-border {
+  width: 32px;
+  height: 16px;
+  background: #222;
+  display: inline-block;
+}
+
+.off,
+.on {
+  width: 16px;
+  height: 16px;
+  background: #222;
+  display: inline-block;
+}
+
+.off {
+  background: #6495ed;
 }
 
 @media screen and (min-width: 550px){
