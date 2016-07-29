@@ -243,6 +243,41 @@ Menu
   background: yellow;
   }
 
+  .power-switch {
+  display: inline-block;
+  position: absolute;
+  top: 180px;
+  left: 110px;
+  z-index: 2;
+}
+
+.power-switch p {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 7px;
+  position: relative;
+  top: -3px;
+}
+
+.off-on-border {
+  width: 20px;
+  height: 10px;
+  background: #222;
+  display: inline-block;
+}
+
+.off,
+.on {
+  width: 10px;
+  height: 10px;
+  background: #222;
+  display: inline-block;
+}
+
+.off {
+  background: #6495ed;
+}
+
 @media screen and (min-width: 550px){
 
   .strict-light {
@@ -311,35 +346,38 @@ Menu
   .strict-button {
   background: yellow;
   }
-}
-
-
-
-.power-switch {
+/*continue here*/
+  .power-switch {
   display: inline-block;
-}
+  top: 300px;
+  left: 170px;
+  }
 
-.power-switch p {
-  display: inline-block;
-}
+  .power-switch p {
+    display: inline-block;
+    font-size: 1em;
+    position: relative;
+    top: -7px;
+  }
 
-.off-on-border {
-  width: 32px;
-  height: 16px;
-  background: #222;
-  display: inline-block;
-}
+  .off-on-border {
+    width: 48px;
+    height: 24px;
+    background: #222;
+    display: inline-block;
+  }
 
-.off,
-.on {
-  width: 16px;
-  height: 16px;
-  background: #222;
-  display: inline-block;
-}
+  .off,
+  .on {
+    width: 24px;
+    height: 24px;
+    background: #222;
+    display: inline-block;
+  }
 
-.off {
-  background: #6495ed;
+  .off {
+    background: #6495ed;
+  }
 }
 
 @media screen and (min-width: 550px){
