@@ -118,6 +118,7 @@ body {
   /*height: 48.88888888888888%;*/
   width: 47%;
   height: 47%;
+  opacity: 0.75;
 }
 
 .red-button {
@@ -129,7 +130,7 @@ body {
 }
 
 .green-button {
-  background: green;
+  background: #00ff00;
   border-radius: 0 100% 0 0;
 }
 
@@ -139,7 +140,7 @@ body {
 }
 
 .blue-button {
-  background: #09f;
+  background: #b0e0e6;
   border-radius: 0 0 0 100%;
   margin-right: 6%;
 }
