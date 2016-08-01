@@ -28,6 +28,8 @@ function off(){
   $(".off").css("background", "#6495ed");
   $(".on").css("background", "#222");
   $(".strict-light").css("background", "#222");
+  $(".start-button").unbind();
+  $(".strict-button").unbind();
   $(".count-display").text("");
 }
 /*end of global click events*/
@@ -35,36 +37,59 @@ function off(){
 
 function newGame(){
   console.log("hits start button. new game begins");
-  computerGivesInstructions();
+  computerGivesInstructions([],0)
 }
 
-function computerGivesInstructions(){
-  console.log("computerGivesInstructions executes")
-  // var possibleButtons = ["red", "green", "blue", "yellow"]
-  var count = 1;
-  function incrementCount(){
-    $(".count-display").text(count);
-    var randomNum = Math.random();
-    if (randomNum > .75) {
-      playButtonSound("red");
-    } else if (randomNum > .5) {
-      playButtonSound("green");
-    } else if (randomNum > .25) {
-      playButtonSound("blue");
-    } else { //randomNum
-      playButtonSound("yellow");
-    }
-    if (count < 20){
-      count++;
-      setTimeout(incrementCount,1000);
-    }
+function computerGivesInstructions(sequence, count){
+  console.log("computerGivesInstructions executes");
+  if (count === 20){
+    $(".count-display").text("You win");
+    // setTimeout(incrementCount,1000);
+    newGame();
   }
-  setTimeout(incrementCount, 1000);
+  count++;
+  $(".count-display").text(count);
+  var randomNum = Math.random();
+  if (randomNum > .75) {
+    playButtonSound("red");
+  } else if (randomNum > .5) {
+    playButtonSound("green");
+  } else if (randomNum > .25) {
+    playButtonSound("blue");
+  } else { //randomNum
+    playButtonSound("yellow");
+  }
+  userInput(sequence,count);
+}
+
+function userInput(colorOrder,currNum){
+  var userClickOrder = [];
+  console.log("userInput function runs")
+  $(".red-button").on("click",function(){
+    playButtonSound("red");
+    userClickOrder.push("red");
+    console.log(userClickOrder);
+  })
+  $(".green-button").on("click",function(){
+    playButtonSound("green");
+    userClickOrder.push("green");
+    console.log(userClickOrder);
+  })
+  $(".blue-button").on("click", function(){
+    playButtonSound("blue");
+    userClickOrder.push("blue");
+    console.log(userClickOrder);
+  })
+  $(".yellow-button").on("click", function(){
+    playButtonSound("yellow");
+    userClickOrder.push("yellow");
+    console.log(userClickOrder);
+  })
 }
 
 function playButtonSound(color){
   if (color === "red"){
-    console.log("play red button");
+    // console.log("play red button");
     var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
     audio.play();
     $(".red-button").css("opacity", "1");
@@ -104,7 +129,7 @@ function toggleStrict(){
   if (backgroundColor == "rgb(34, 34, 34)") {
     // console.log("strict-light background is almost black")
     $(".strict-light").css("background", "red");
-    enterStrictMode(); 
+    // enterStrictMode(); 
   } else {
     $(".strict-light").css("background", "#222");
   } // strict light is red and strict mode is on
