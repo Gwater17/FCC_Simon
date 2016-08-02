@@ -108,11 +108,24 @@ function userInput(colorOrder,currNum){
 
 function playCurrentSequence(existingSequence){
   console.log("hits the playCurrentSequence function", existingSequence);
+  function inner(remainingSequence){
+    if (remainingSequence.length === 0) {
+      return;
+    }
+    setTimeout(function(){
+      playButtonSound(remainingSequence[0]);
+    },1000);
+    return setTimeout(function(){
+      inner(remainingSequence.slice(1));
+    },1000)
+  }
+  return inner(existingSequence);
+  /*
   for (var i = 0; i < existingSequence.length; i++){
     (function IIFE(currColor){
       playButtonSound(currColor);
     })(existingSequence[i])
-  }
+  }*/
   // existingSequence.forEach(function(value){
     // playButtonSound("value");
   // })
