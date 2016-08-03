@@ -84,9 +84,8 @@ function pickNewColor(){
   }
   if (newColor > .25){
     return "blue";
-  } else {
-    return "yellow";
-  }
+  } 
+  return "yellow";
 }
 
 function userInput(pcSequence, userSequence){
