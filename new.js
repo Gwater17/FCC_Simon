@@ -8,20 +8,20 @@ $(".off").on("click",function(){
   off();
 })
 
+//makes on div blue, off div black, initiates count at -- (for nothing) enables clicking of start and strict button
 function on(){
   $(".on").css("background", "#6495ed");
   $(".off").css("background", "#222");
   $(".count-display").text("--");
-  // return function enableStuff(){
-    $(".start-button").on("click", function(){
+  $(".start-button").on("click", function(){
     computerGivesInstructions([],0, true);
   });
     $(".strict-button").on("click", function(){
       toggleStrict();
     })
-  // };
 }
 
+//makes off div blue, on div black, makes strict light black, makes count text empty, disables click event handlers on start button and strict button
 /*Click Off button*/
 function off(){
   $(".off").css("background", "#6495ed");
@@ -49,13 +49,19 @@ function off(){
 /*add for strict mode here
 if ($(".strict-light").css("background-color") == "rgb(34, 34, 34)"){}
 */
-function computerGivesInstructions(pcSequence, count, right){
+
+
+/* 1. if you've gotten 20 in a row right say you win and start new game
+2. if your last guess was correct (or you've started a new game) increment the count and display that on the screen, add a new color to the sequence, play the sequence, and tell the user to guess
+3. if your last guess was not correct, play the previous sequence and tell the user to guess
+*/
+function computerGivesInstructions(pcSequence, count, correct){
   console.log("hits computerGivesInstructions");
   if (count === 20){
     $(".count-display").text("You win!");
     return computerGivesInstructions([],0, true);
   }
-  if (right === true){
+  if (correct === true){
     count++;
     $(".count-display").text(count);
     var newColor = pickNewColor();
@@ -67,12 +73,14 @@ function computerGivesInstructions(pcSequence, count, right){
   return userInput(pcSequence, []) //return this?
 }
 
+/*Plays the computer sequence*/
 function playSequence(theSequence){
-  for (let i = 0; i < theSequence.length; i++){ //change var to let?
+  for (let i = 0; i < theSequence.length; i++){ 
     playButtonSound(theSequence[i]);
   }
 }
 
+//generates a new color. Probability is the same for each color
 function pickNewColor(){
   console.log("hits pickNewColor function");
   var newColor = Math.random();
@@ -88,6 +96,7 @@ function pickNewColor(){
   return "yellow";
 }
 
+/*each time the user clicks the current color is added to the userSequence and compared via a call to the checkAnswer function*/
 function userInput(pcSequence, userSequence){
   console.log("hits userInput function pcSequence is: ", pcSequence, "userSequence is : ", userSequence);
   $(".red-button").on("click",function(){
@@ -137,6 +146,7 @@ function userInput(pcSequence, userSequence){
   */
 }
 
+/*each time the computer sequence is played or the user clicks on a button corresponding sound is played and the color is highlighted */
 function playButtonSound(color){
   if (color === "red") {
     //make sound
@@ -153,6 +163,11 @@ function playButtonSound(color){
   }
 }
 
+/*
+1. if the human has correctly finished the sequence. tell the computer to give instructions and add a new color
+2. if the human has partially completed the sequence. tell the human to guess again
+3. if the human is wrong. tell the computer to replay the sequence
+*/
 function checkAnswer(computerOrder, humanOrder){
   console.log("hits check answer function. first if statment runs if: ", computerOrder.length === humanOrder.length, computerOrder, humanOrder);
   if (computerOrder.length === humanOrder.length && computerOrder[computerOrder.length-1] === humanOrder[humanOrder.length-1]){
