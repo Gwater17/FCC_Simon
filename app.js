@@ -10,26 +10,61 @@ generateSequence();
 
 //event handlers for mousedown, mouseup
 function userInput(){
-  $(".bttn").on("mousedown", function(e){
+  $(".bttn").on("click", function(e){
+    e.stopPropagation();
     buttonPress($(this));
-    console.log($(this), e.target, this.className.split(" ")[0]);
+    // console.log($(this), e.target, this.className.split(" ")[0]);
     userProgressCount++;
+    console.log("You clicked: ", userProgressCount, "times");
     validate(this.className.split(" ")[0]);
   })
 }
 
 function validate(pressedButton) {
-  console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount, "Array of Colors: ", arrColors);
+  console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount);
+  // console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount, "Array of Colors: ", arrColors);
   if (userProgressCount === playBackCount - 1 && pressedButton === arrColors[userProgressCount - 1].slice(1)) {
-    console.log("hits this");
+    console.log("guessed everything correctly");
     playCurrentSequenceSoFar(arrColors);
-  } else if (true) {
-    return;
+  } 
+  else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
+    userInput();
   } else {
-    userProgressCount--;
-    playCurrentSequenceSoFar();
+    // userProgressCount--;
+    playCurrentSequenceSoFar(arrColors);
   }
 }
+
+//show button press for entire sequence
+function playCurrentSequenceSoFar(sequence){
+  playBackCount = 1;
+  function inner(buttonColor){
+    console.log(playBackCount);
+    if (playBackCount > userProgressCount + 1) {
+      console.log("return here");
+      userProgressCount = 0;
+      console.log("User progress count: ", userProgressCount); 
+      // playBackCount = 0;
+      return userInput();
+    }
+    buttonPress(buttonColor); 
+    playBackCount++;
+    setTimeout(function(){
+      inner(sequence[playBackCount+1])
+    },1000)
+  }
+  inner(sequence[playBackCount-1]);
+}
+
+
+function buttonPress(color) {
+  $(color).css("opacity", 1)
+  setTimeout(function(){
+    $(color).css("opacity", .75);  
+  }, 1000);
+  
+}
+
 
 function generateSequence(){
   var arr = [];
@@ -59,36 +94,6 @@ function convertNumsToColor(sequenceOfNums){
   playCurrentSequenceSoFar(arrColors);
 }
 // console.log(generateSequence());
-
-//show button press for entire sequence
-function playCurrentSequenceSoFar(sequence){
-  playBackCount = 1;
-  function inner(buttonColor){
-    console.log(playBackCount);
-    if (playBackCount > userProgressCount + 1) {
-      console.log("return here");
-      userProgressCount = 0; 
-      // playBackCount = 0;
-      return userInput();
-    }
-    buttonPress(buttonColor); 
-    playBackCount++;
-    setTimeout(function(){
-      inner(sequence[playBackCount+1])
-    },1000)
-  }
-  inner(sequence[playBackCount-1]);
-}
-
-
-function buttonPress(color) {
-  $(color).css("opacity", 1)
-  setTimeout(function(){
-    $(color).css("opacity", .75);  
-  }, 1000);
-  
-}
-
 
 }); // document.ready 
 
