@@ -40,6 +40,7 @@ function newGame(){
   computerGivesInstructions([],0)
 }
 
+
 function computerGivesInstructions(sequence, count){
   console.log("computerGivesInstructions executes", sequence, count);
   if (count === 20){

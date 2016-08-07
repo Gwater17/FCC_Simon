@@ -6,12 +6,13 @@ var userProgressCount = 0;
 var playBackCount = 0;
 var arrColors = [];
 generateSequence();
-
+$(".bob").html(arrColors);
 
 //event handlers for mousedown, mouseup
 function userInput(){
-  $(".bttn").on("click", function(e){
-    e.stopPropagation();
+  console.log("what I need to click", arrColors.slice(0,playBackCount -1))
+  $(".bttn").unbind("click").on("click", function(e){
+    // e.stopPropagation();
     buttonPress($(this));
     // console.log($(this), e.target, this.className.split(" ")[0]);
     userProgressCount++;
@@ -28,17 +29,19 @@ function validate(pressedButton) {
     playCurrentSequenceSoFar(arrColors);
   } 
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
-    userInput();
+    // userInput();
   } else {
-    // userProgressCount--;
+    userProgressCount--;
     playCurrentSequenceSoFar(arrColors);
   }
 }
 
 //show button press for entire sequence
 function playCurrentSequenceSoFar(sequence){
+  console.log("this is the whole sequence", sequence);
   playBackCount = 1;
   function inner(buttonColor){
+    console.log("this is the current color", buttonColor);
     if (playBackCount > userProgressCount + 1) {
       console.log("return here");
       userProgressCount = 0;
@@ -49,7 +52,7 @@ function playCurrentSequenceSoFar(sequence){
     buttonPress(buttonColor); 
     playBackCount++;
     setTimeout(function(){
-      inner(sequence[playBackCount+1])
+      inner(sequence[playBackCount-1])
     },1000)
   }
   inner(sequence[playBackCount-1]);
@@ -57,6 +60,7 @@ function playCurrentSequenceSoFar(sequence){
 
 
 function buttonPress(color) {
+  console.log("This color comes into button press", color);
   $(color).css("opacity", 1)
   setTimeout(function(){
     $(color).css("opacity", .75);  
