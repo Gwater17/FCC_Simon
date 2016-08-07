@@ -39,7 +39,6 @@ function validate(pressedButton) {
 function playCurrentSequenceSoFar(sequence){
   playBackCount = 1;
   function inner(buttonColor){
-    console.log(playBackCount);
     if (playBackCount > userProgressCount + 1) {
       console.log("return here");
       userProgressCount = 0;
