@@ -88,6 +88,7 @@ function playCurrentSequenceSoFar(){
       inner(arrColors[playBackCount-1])
     },1000)
   }
+  $(".bttn").unbind("click") //prevents me from clicking buttons while sequence is played
   inner(arrColors[playBackCount-1]);
 }
 
