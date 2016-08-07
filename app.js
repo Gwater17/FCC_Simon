@@ -5,6 +5,7 @@ $(document).ready(function(){
 var userProgressCount = 0;
 var playBackCount = 0;
 var arrColors = [];
+var numberOfTimesToRun = 0;
 generateSequence();
 $(".bob").html(arrColors);
 
@@ -26,36 +27,38 @@ function validate(pressedButton) {
   // console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount, "Array of Colors: ", arrColors);
   if (userProgressCount === playBackCount - 1 && pressedButton === arrColors[userProgressCount - 1].slice(1)) {
     console.log("guessed everything correctly");
-    playCurrentSequenceSoFar(arrColors);
+    numberOfTimesToRun++;
+    playCurrentSequenceSoFar();
   } 
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
     // userInput();
   } else {
     userProgressCount--;
-    playCurrentSequenceSoFar(arrColors);
+    playCurrentSequenceSoFar();
   }
 }
 
 //show button press for entire sequence
-function playCurrentSequenceSoFar(sequence){
-  console.log("this is the whole sequence", sequence);
+function playCurrentSequenceSoFar(){
+  console.log("this is the whole sequence", arrColors);
   playBackCount = 1;
   function inner(buttonColor){
     console.log("this is the current color", buttonColor);
-    if (playBackCount > userProgressCount + 1) {
+    if (playBackCount > numberOfTimesToRun + 1) {
       console.log("return here");
       userProgressCount = 0;
-      console.log("User progress count: ", userProgressCount); 
+      console.log("User progress count: ", userProgressCount);
+      numberOfTimesToRun = playBackCount - 2; 
       // playBackCount = 0;
       return userInput();
     }
     buttonPress(buttonColor); 
     playBackCount++;
     setTimeout(function(){
-      inner(sequence[playBackCount-1])
+      inner(arrColors[playBackCount-1])
     },1000)
   }
-  inner(sequence[playBackCount-1]);
+  inner(arrColors[playBackCount-1]);
 }
 
 
