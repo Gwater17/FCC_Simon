@@ -1,7 +1,9 @@
 //write a function that returns a random integer b/w 1 and 4
 /*What I still need to do 
-//1. get timers to flash appropriate amount of time
-//2. add sound
+//1. get timers to flash appropriate amount of time 
+//2. add sound (DONE)
+//2.5 count display (WORKING VERSION DONE)
+//2.75 disable clicking during play sequence
 //3. make on/off/start/buttons work
 //4. strict mode
 Bonus
@@ -89,14 +91,35 @@ function playCurrentSequenceSoFar(){
   inner(arrColors[playBackCount-1]);
 }
 
-
+/*
 function buttonPress(color) {
   console.log("This color comes into button press", color);
   $(color).css("opacity", 1)
   setTimeout(function(){
     $(color).css("opacity", .75);  
   }, 500);
-  
+}*/
+
+function buttonPress(color) {
+  if ($(color).is(".red-button")|| color === ".red-button") {
+    // console.log("hits red");
+    var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+    audio.play();
+  } else if ($(color).is(".green-button")|| color === ".green-button") {
+    var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+    audio.play();
+  } else if ($(color).is(".blue-button")|| color === ".blue-button") {
+    var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+    audio.play();
+  } else {
+    var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+    audio.play();
+  }
+  console.log("This color comes into button press", color);
+  $(color).css("opacity", 1)
+  setTimeout(function(){
+    $(color).css("opacity", .75);  
+  }, 500);
 }
 
 
