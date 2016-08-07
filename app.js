@@ -1,4 +1,17 @@
 //write a function that returns a random integer b/w 1 and 4
+/*What I still need to do 
+//1. get timers to flash appropriate amount of time
+//2. add sound
+//3. make on/off/start/buttons work
+//4. strict mode
+Bonus
+//0. add buzzer sound for wrong answer
+//1. time limit for guess
+//2. speed up instructions on 5th, 9th, 13th steps
+//3. high score
+//4. lives?
+*/
+
 
 $(document).ready(function(){
 
@@ -6,7 +19,15 @@ var userProgressCount = 0;
 var playBackCount = 0;
 var arrColors = [];
 var numberOfTimesToRun = 0;
+var displayCount = 0;
+incrementDisplayCount();
 generateSequence();
+
+function incrementDisplayCount(){
+  displayCount++;
+  $(".count-display").text(displayCount);
+}
+
 $(".bob").html(arrColors);
 
 //event handlers for mousedown, mouseup
@@ -28,13 +49,20 @@ function validate(pressedButton) {
   if (userProgressCount === playBackCount - 1 && pressedButton === arrColors[userProgressCount - 1].slice(1)) {
     console.log("guessed everything correctly");
     numberOfTimesToRun++;
-    playCurrentSequenceSoFar();
+    setTimeout(function(){
+      incrementDisplayCount();
+    }, 750)
+    setTimeout(function(){
+      playCurrentSequenceSoFar();
+    },1000)
   } 
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
     // userInput();
   } else {
     userProgressCount--;
-    playCurrentSequenceSoFar();
+    setTimeout(function(){
+      playCurrentSequenceSoFar();
+    },1000)
   }
 }
 
@@ -67,7 +95,7 @@ function buttonPress(color) {
   $(color).css("opacity", 1)
   setTimeout(function(){
     $(color).css("opacity", .75);  
-  }, 1000);
+  }, 500);
   
 }
 
