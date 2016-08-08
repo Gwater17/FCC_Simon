@@ -10,7 +10,7 @@
 Bonus
 //0. add buzzer sound for wrong answer (DONE)
 //1. time limit for guess (DONE)
-//2. speed up instructions on 5th, 9th, 13th steps
+//2. speed up instructions on 5th, 9th, 13th steps //can use numberofTimesToRun + 1 === whatever
 //3. high score
 //4. put global variables in object
 //5. lives?
@@ -28,6 +28,7 @@ var numberOfTimesToRun = 0;
 var displayCount = 0;
 var stop = false;
 var strict = false;
+var noBuzzerIfPressStart = false;
 // incrementDisplayCount();
 // generateSequence();
 
@@ -64,6 +65,7 @@ function on(){
     }) //why did it require me to put this button before start in the function?
   $(".start-button").unbind().on("click", function(){
     setTimeout(function(){
+      noBuzzerIfPressStart = true;
       newGame();
     },0)
   });
@@ -99,7 +101,7 @@ function userInput(){
     }
   },5000)
   setTimeout(function(){
-      if (stop === true) {
+      if (stop === true || noBuzzerIfPressStart === true) {
         clearTimeout(theBuzzer);
       }
     },4999)
@@ -157,6 +159,7 @@ function playBuzzer(){
 
 //show button press for entire sequence
 function playCurrentSequenceSoFar(){
+  console.log("Number of times to run: ", numberOfTimesToRun);
   if (stop) {
       return;
     }
@@ -169,6 +172,7 @@ function playCurrentSequenceSoFar(){
     console.log("this is the current color", buttonColor);
     // console.log("playback count: ", playBackCount, "numberOfTimesToRun: ", numberOfTimesToRun)
     if (playBackCount > numberOfTimesToRun + 1) {
+      // console.log("Number of times to run: ", numberOfTimesToRun);
       console.log("return here");
       userProgressCount = 0;
       console.log("User progress count: ", userProgressCount);
