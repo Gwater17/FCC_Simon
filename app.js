@@ -6,9 +6,9 @@
 //2.75 disable clicking during play sequence (DONE)
 //3. make on/off/start/buttons work (DONE)
 //3.5 make game stop at 20 and start new one (DONE)
-//4. strict mode
+//4. strict mode (DONE!)
 Bonus
-//0. add buzzer sound for wrong answer
+//0. add buzzer sound for wrong answer (DONE)
 //1. time limit for guess
 //2. speed up instructions on 5th, 9th, 13th steps
 //3. high score
@@ -118,15 +118,17 @@ function validate(pressedButton) {
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
     // userInput();
   } else {
+    var audio = new Audio('https://res.cloudinary.com/dyr8j9g6m/video/upload/v1470621686/buzzer_otepjj.mp3');
+    audio.play();
     if (strict) {
       return setTimeout(function(){
         newGame();
-      },1000)
+      },3000)
     }
     userProgressCount--;
     setTimeout(function(){
       playCurrentSequenceSoFar();
-    },1000)
+    },3000)
   }
 }
 
