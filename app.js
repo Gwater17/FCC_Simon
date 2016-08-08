@@ -4,8 +4,8 @@
 //2. add sound (DONE)
 //2.5 count display (WORKING VERSION DONE)
 //2.75 disable clicking during play sequence (DONE)
-//3. make on/off/start/buttons work (start button)
-//3.5 make game stop at 20
+//3. make on/off/start/buttons work (DONE)
+//3.5 make game stop at 20 and start new one (DONE)
 //4. strict mode
 Bonus
 //0. add buzzer sound for wrong answer
@@ -25,7 +25,7 @@ var playBackCount = 0;
 var arrColors = [];
 var numberOfTimesToRun = 0;
 var displayCount = 0;
-var stillRunning;
+var stop = false;
 // incrementDisplayCount();
 // generateSequence();
 
@@ -44,6 +44,8 @@ function off(){
   $(".strict-light").css("background", "#222");
   $(".start-button").unbind();
   $(".count-display").text("");
+  $(".bttn").unbind();
+  stop = true;
   // clearTimeout(stillRunning);
 }
 
@@ -59,6 +61,7 @@ function on(){
 }
 
 function newGame(){
+  stop = false;
   displayCount = 0;
   userProgressCount = 0;
   playBackCount = 0;
@@ -116,9 +119,15 @@ function validate(pressedButton) {
 
 //show button press for entire sequence
 function playCurrentSequenceSoFar(){
+  if (stop) {
+      return;
+    }
   console.log("this is the whole sequence", arrColors);
   playBackCount = 1;
   function inner(buttonColor){
+    if (stop) {
+      return;
+    }
     console.log("this is the current color", buttonColor);
     // console.log("playback count: ", playBackCount, "numberOfTimesToRun: ", numberOfTimesToRun)
     if (playBackCount > numberOfTimesToRun + 1) {
