@@ -43,6 +43,7 @@ function off(){
   $(".on").css("background", "#222");
   $(".strict-light").css("background", "#222");
   $(".start-button").unbind();
+  $(".strict-button").unbind();
   $(".count-display").text("");
   $(".bttn").unbind();
   stop = true;
@@ -53,7 +54,12 @@ function on(){
   $(".on").css("background", "#6495ed");
   $(".off").css("background", "#222");
   $(".count-display").text("--");
-  $(".start-button").on("click", function(){
+  $(".strict-button").unbind().on("click", function(){
+      setTimeout(function(){
+        toggleStrict();
+      },0)
+    }) //why did it require me to put this button before start in the function?
+  $(".start-button").unbind().on("click", function(){
     setTimeout(function(){
       newGame();
     },0)
@@ -208,6 +214,20 @@ function convertNumsToColor(sequenceOfNums){
   $(".bob").html(arrColors);
   playCurrentSequenceSoFar(arrColors);
 }
+
+function toggleStrict(){
+  console.log("hits strict button");
+  var backgroundColor = $(".strict-light").css("background-color");
+  // console.log(backgroundColor);
+  if (backgroundColor == "rgb(34, 34, 34)") { //same as #222
+    // console.log("strict-light background is almost black")
+    $(".strict-light").css("background", "red");
+    // enterStrictMode(); 
+  } else {
+    $(".strict-light").css("background", "#222");
+  } // strict light is red and strict mode is on
+}
+
 // console.log(generateSequence());
 
 }); // document.ready 
