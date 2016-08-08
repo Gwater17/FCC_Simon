@@ -14,6 +14,7 @@ Bonus
 //3. high score (DONE)
 //4. put global variables in object (DONE)
 //5. lives?
+//6. dynamically generate the array by adding 1 element at a time?
 */
 
 
