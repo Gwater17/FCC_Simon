@@ -29,6 +29,8 @@ var displayCount = 0;
 var stop = false;
 var strict = false;
 var noBuzzerIfPressStart = false;
+var highScore = 0;
+var hasStartedOnce = false;
 // incrementDisplayCount();
 // generateSequence();
 
@@ -36,7 +38,7 @@ $(".off").on("click",function(){
   off();
 })
 
-$(".on").on("click",function(){
+$(".on").unbind().on("click",function(){
   on();
 })
 
@@ -51,13 +53,17 @@ function off(){
   $(".bttn").unbind();
   stop = true;
   strict = false;
+  hasStartedOnce = false;
   // clearTimeout(stillRunning);
 }
 
 function on(){
   $(".on").css("background", "#6495ed");
   $(".off").css("background", "#222");
-  $(".count-display").text("--");
+  console.log("hasStartedOnce is: ", hasStartedOnce)
+  if (!hasStartedOnce) {
+    $(".count-display").text("--");
+  }
   $(".strict-button").unbind().on("click", function(){
       setTimeout(function(){
         toggleStrict();
@@ -72,6 +78,7 @@ function on(){
 }
 
 function newGame(){
+  hasStartedOnce = true;
   stop = false;
   displayCount = 0;
   userProgressCount = 0;
@@ -122,6 +129,7 @@ function validate(pressedButton) {
   // console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount, "Array of Colors: ", arrColors);
   if (userProgressCount === playBackCount - 1 && pressedButton === arrColors[userProgressCount - 1].slice(1)) {
     console.log("guessed everything correctly");
+    checkForHighScore();
     if (userProgressCount === 20) {
       $(".count-display").text("Win!");
       return setTimeout(function(){
@@ -137,6 +145,7 @@ function validate(pressedButton) {
     },1000)
   } 
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
+    checkForHighScore();
     userInput();
   } else {
     playBuzzer();
@@ -149,6 +158,13 @@ function validate(pressedButton) {
     setTimeout(function(){
       playCurrentSequenceSoFar();
     },3000)
+  }
+}
+
+function checkForHighScore() {
+  if (userProgressCount > highScore) {
+    highScore = userProgressCount;
+    $(".high-score-num").text(userProgressCount);
   }
 }
 
