@@ -9,10 +9,11 @@
 //4. strict mode (DONE!)
 Bonus
 //0. add buzzer sound for wrong answer (DONE)
-//1. time limit for guess
+//1. time limit for guess (DONE)
 //2. speed up instructions on 5th, 9th, 13th steps
 //3. high score
-//4. lives?
+//4. put global variables in object
+//5. lives?
 */
 
 
@@ -85,8 +86,26 @@ function incrementDisplayCount(){
 
 //event handlers for mousedown, mouseup
 function userInput(){
+  var theBuzzer = setTimeout(function(){
+    playBuzzer();
+    if (strict) {
+      return setTimeout(function(){
+        newGame();
+      },3000)
+    } else {
+      setTimeout(function(){
+      playCurrentSequenceSoFar();
+    },3000)
+    }
+  },5000)
+  setTimeout(function(){
+      if (stop === true) {
+        clearTimeout(theBuzzer);
+      }
+    },4999)
   console.log("what I need to click", arrColors.slice(0,playBackCount -1))
   $(".bttn").unbind("click").on("click", function(e){
+    clearTimeout(theBuzzer);
     // e.stopPropagation();
     buttonPress($(this));
     // console.log($(this), e.target, this.className.split(" ")[0]);
@@ -116,10 +135,9 @@ function validate(pressedButton) {
     },1000)
   } 
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
-    // userInput();
+    userInput();
   } else {
-    var audio = new Audio('https://res.cloudinary.com/dyr8j9g6m/video/upload/v1470621686/buzzer_otepjj.mp3');
-    audio.play();
+    playBuzzer();
     if (strict) {
       return setTimeout(function(){
         newGame();
@@ -130,6 +148,11 @@ function validate(pressedButton) {
       playCurrentSequenceSoFar();
     },3000)
   }
+}
+
+function playBuzzer(){
+  var audio = new Audio('https://res.cloudinary.com/dyr8j9g6m/video/upload/v1470621686/buzzer_otepjj.mp3');
+  audio.play();
 }
 
 //show button press for entire sequence
