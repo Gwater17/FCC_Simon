@@ -10,7 +10,7 @@
 Bonus
 //0. add buzzer sound for wrong answer (DONE)
 //1. time limit for guess (DONE)
-//2. speed up instructions on 5th, 9th, 13th steps //can use numberofTimesToRun + 1 === whatever
+//2. speed up instructions on 5th, 9th, 13th steps //can use numberofTimesToRun + 1 === whatever (DONE)
 //3. high score
 //4. put global variables in object
 //5. lives?
@@ -182,12 +182,25 @@ function playCurrentSequenceSoFar(){
     }
     buttonPress(buttonColor); 
     playBackCount++;
+    var incrementSpeed = determineIncrementSpeed();
     setTimeout(function(){
       inner(arrColors[playBackCount-1])
-    },1000)
+    },incrementSpeed)
   }
   $(".bttn").unbind("click") //prevents me from clicking buttons while sequence is played
   inner(arrColors[playBackCount-1]);
+}
+
+function determineIncrementSpeed(){
+  if (numberOfTimesToRun + 1 >= 13) {
+    return 400;
+  } else if (numberOfTimesToRun + 1 >= 9) {
+    return 600;
+  } else if (numberOfTimesToRun + 1 >= 5) {
+    return 800;
+  } else {
+    return 1000;
+  }
 }
 
 /*
@@ -203,24 +216,57 @@ function buttonPress(color) {
   if ($(color).is(".red-button")|| color === ".red-button") {
     // console.log("hits red");
     var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+    console.log("this is the audio element: ", audio)
+    audio.playbackRate = determinePlayBackSoundSpeed();
     audio.play();
   } else if ($(color).is(".green-button")|| color === ".green-button") {
     var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+    console.log("this is the audio element: ", audio)
+    audio.playbackRate = determinePlayBackSoundSpeed();
     audio.play();
   } else if ($(color).is(".blue-button")|| color === ".blue-button") {
     var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+    console.log("this is the audio element: ", audio)
+    audio.playbackRate = determinePlayBackSoundSpeed();
     audio.play();
   } else {
     var audio = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+    console.log("this is the audio element: ", audio)
+    audio.playbackRate = determinePlayBackSoundSpeed();
     audio.play();
   }
   console.log("This color comes into button press", color);
   $(color).css("opacity", 1)
-  setTimeout(function(){
+  if (numberOfTimesToRun + 1 >= 9) {
+    setTimeout(function(){
+    $(color).css("opacity", .75);  
+  }, 200); //400
+  } else if (numberOfTimesToRun + 1 >= 9) {
+    setTimeout(function(){
+    $(color).css("opacity", .75);  
+  }, 300); //600
+  } else if (numberOfTimesToRun + 1 >= 5) {
+    setTimeout(function(){
+    $(color).css("opacity", .75);  
+  }, 400); //800
+  } else {
+    setTimeout(function(){
     $(color).css("opacity", .75);  
   }, 500);
+  }
 }
 
+function determinePlayBackSoundSpeed(){
+  if (numberOfTimesToRun + 1 >= 13) {
+      return 2.5;
+    } else if (numberOfTimesToRun + 1 >= 9) {
+      return 1.66666666666666;
+    } else if (numberOfTimesToRun + 1 >= 5) {
+      return 1.25
+    } else {
+      return 1;
+    }
+}
 
 function generateSequence(){
   var arr = [];
