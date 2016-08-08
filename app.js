@@ -95,6 +95,7 @@ function incrementDisplayCount(){
 
 //event handlers for mousedown, mouseup
 function userInput(){
+  noBuzzerIfPressStart = false;
   var theBuzzer = setTimeout(function(){
     playBuzzer();
     if (strict) {
@@ -107,8 +108,9 @@ function userInput(){
     },3000)
     }
   },5000)
+  console.log("stop is: ", stop, "noBuzzerIfPressStart is: ", noBuzzerIfPressStart);
   setTimeout(function(){
-      if (stop === true || noBuzzerIfPressStart === true) {
+      if (stop || noBuzzerIfPressStart) {
         clearTimeout(theBuzzer);
       }
     },4999)
@@ -268,7 +270,7 @@ function buttonPress(color) {
   } else {
     setTimeout(function(){
     $(color).css("opacity", .75);  
-  }, 500);
+  }, 500); //1000
   }
 }
 
