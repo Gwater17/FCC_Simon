@@ -1,10 +1,11 @@
 //write a function that returns a random integer b/w 1 and 4
 /*What I still need to do 
-//1. get timers to flash appropriate amount of time 
+//1. get timers to flash appropriate amount of time (DONE) 
 //2. add sound (DONE)
 //2.5 count display (WORKING VERSION DONE)
-//2.75 disable clicking during play sequence
+//2.75 disable clicking during play sequence (DONE)
 //3. make on/off/start/buttons work
+//3.5 make game stop at 20
 //4. strict mode
 Bonus
 //0. add buzzer sound for wrong answer
@@ -17,20 +18,55 @@ Bonus
 
 $(document).ready(function(){
 
+
+
 var userProgressCount = 0;
 var playBackCount = 0;
 var arrColors = [];
 var numberOfTimesToRun = 0;
 var displayCount = 0;
-incrementDisplayCount();
-generateSequence();
+var stillRunning;
+// incrementDisplayCount();
+// generateSequence();
+
+$(".off").on("click",function(){
+  off();
+})
+
+$(".on").on("click",function(){
+  on();
+})
+
+
+function off(){
+  $(".off").css("background", "#6495ed");
+  $(".on").css("background", "#222");
+  $(".strict-light").css("background", "#222");
+  $(".start-button").unbind();
+  $(".count-display").text("");
+  // clearTimeout(stillRunning);
+}
+
+function on(){
+  $(".on").css("background", "#6495ed");
+  $(".off").css("background", "#222");
+  $(".count-display").text("--");
+  $(".start-button").on("click", function(){
+    setTimeout(function(){
+      displayCount = 0;
+      userProgressCount = 0;
+      playBackCount = 0;
+      numberOfTimesToRun = 0;
+      incrementDisplayCount();
+      generateSequence();
+    },0)
+  });
+}
 
 function incrementDisplayCount(){
   displayCount++;
   $(".count-display").text(displayCount);
 }
-
-$(".bob").html(arrColors);
 
 //event handlers for mousedown, mouseup
 function userInput(){
@@ -74,6 +110,10 @@ function playCurrentSequenceSoFar(){
   playBackCount = 1;
   function inner(buttonColor){
     console.log("this is the current color", buttonColor);
+    // if (playBackCount > 20) {
+      // $(".count-display").text("You Win!");
+      // return generateSequence();
+    // }
     if (playBackCount > numberOfTimesToRun + 1) {
       console.log("return here");
       userProgressCount = 0;
@@ -149,6 +189,7 @@ function convertNumsToColor(sequenceOfNums){
         arrColors.push(".yellow-button")
     }
   }
+  $(".bob").html(arrColors);
   playCurrentSequenceSoFar(arrColors);
 }
 // console.log(generateSequence());
