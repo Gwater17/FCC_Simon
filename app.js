@@ -4,7 +4,7 @@
 //2. add sound (DONE)
 //2.5 count display (WORKING VERSION DONE)
 //2.75 disable clicking during play sequence (DONE)
-//3. make on/off/start/buttons work
+//3. make on/off/start/buttons work (start button)
 //3.5 make game stop at 20
 //4. strict mode
 Bonus
@@ -53,14 +53,18 @@ function on(){
   $(".count-display").text("--");
   $(".start-button").on("click", function(){
     setTimeout(function(){
-      displayCount = 0;
-      userProgressCount = 0;
-      playBackCount = 0;
-      numberOfTimesToRun = 0;
-      incrementDisplayCount();
-      generateSequence();
+      newGame();
     },0)
   });
+}
+
+function newGame(){
+  displayCount = 0;
+  userProgressCount = 0;
+  playBackCount = 0;
+  numberOfTimesToRun = 0;
+  incrementDisplayCount();
+  generateSequence();
 }
 
 function incrementDisplayCount(){
@@ -86,6 +90,12 @@ function validate(pressedButton) {
   // console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount, "Array of Colors: ", arrColors);
   if (userProgressCount === playBackCount - 1 && pressedButton === arrColors[userProgressCount - 1].slice(1)) {
     console.log("guessed everything correctly");
+    if (userProgressCount === 20) {
+      $(".count-display").text("Win!");
+      return setTimeout(function(){
+        newGame();
+      },1000)
+    }
     numberOfTimesToRun++;
     setTimeout(function(){
       incrementDisplayCount();
@@ -110,10 +120,7 @@ function playCurrentSequenceSoFar(){
   playBackCount = 1;
   function inner(buttonColor){
     console.log("this is the current color", buttonColor);
-    // if (playBackCount > 20) {
-      // $(".count-display").text("You Win!");
-      // return generateSequence();
-    // }
+    // console.log("playback count: ", playBackCount, "numberOfTimesToRun: ", numberOfTimesToRun)
     if (playBackCount > numberOfTimesToRun + 1) {
       console.log("return here");
       userProgressCount = 0;
