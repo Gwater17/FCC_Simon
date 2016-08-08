@@ -10,27 +10,38 @@
 Bonus
 //0. add buzzer sound for wrong answer (DONE)
 //1. time limit for guess (DONE)
-//2. speed up instructions on 5th, 9th, 13th steps //can use numberofTimesToRun + 1 === whatever (DONE)
-//3. high score
-//4. put global variables in object
+//2. speed up instructions on 5th, 9th, 13th steps //can use allTheGlobals.numberOfTimesToRun + 1 === whatever (DONE)
+//3. high score (DONE)
+//4. put global variables in object (DONE)
 //5. lives?
 */
 
 
 $(document).ready(function(){
 
+var allTheGlobals = {
+  userProgressCount: 0,
+  playBackCount: 0,
+  arrColors: [],
+  numberOfTimesToRun: 0,
+  displayCount: 0,
+  stop: false,
+  strict: false,
+  noBuzzerIfPressStart: false,
+  highScore: 0,
+  hasStartedOnce: false
+}
 
-
-var userProgressCount = 0;
-var playBackCount = 0;
-var arrColors = [];
-var numberOfTimesToRun = 0;
-var displayCount = 0;
-var stop = false;
-var strict = false;
-var noBuzzerIfPressStart = false;
-var highScore = 0;
-var hasStartedOnce = false;
+// var userProgressCount = 0;
+// var playBackCount = 0;
+// var arrColors = [];
+// var numberOfTimesToRun = 0;
+// var displayCount = 0;
+// var stop = false;
+// var strict = false;
+// var noBuzzerIfPressStart = false;
+// var highScore = 0;
+// var hasStartedOnce = false;
 // incrementDisplayCount();
 // generateSequence();
 
@@ -51,17 +62,17 @@ function off(){
   $(".strict-button").unbind();
   $(".count-display").text("");
   $(".bttn").unbind();
-  stop = true;
-  strict = false;
-  hasStartedOnce = false;
+  allTheGlobals.stop = true;
+  allTheGlobals.strict = false;
+  allTheGlobals.hasStartedOnce = false;
   // clearTimeout(stillRunning);
 }
 
 function on(){
   $(".on").css("background", "#6495ed");
   $(".off").css("background", "#222");
-  console.log("hasStartedOnce is: ", hasStartedOnce)
-  if (!hasStartedOnce) {
+  console.log("allTheGlobals.hasStartedOnce is: ", allTheGlobals.hasStartedOnce)
+  if (!allTheGlobals.hasStartedOnce) {
     $(".count-display").text("--");
   }
   $(".strict-button").unbind().on("click", function(){
@@ -71,34 +82,34 @@ function on(){
     }) //why did it require me to put this button before start in the function?
   $(".start-button").unbind().on("click", function(){
     setTimeout(function(){
-      noBuzzerIfPressStart = true;
+      allTheGlobals.noBuzzerIfPressStart = true;
       newGame();
     },0)
   });
 }
 
 function newGame(){
-  hasStartedOnce = true;
-  stop = false;
-  displayCount = 0;
-  userProgressCount = 0;
-  playBackCount = 0;
-  numberOfTimesToRun = 0;
+  allTheGlobals.hasStartedOnce = true;
+  allTheGlobals.stop = false;
+  allTheGlobals.displayCount = 0;
+  allTheGlobals.userProgressCount = 0;
+  allTheGlobals.playBackCount = 0;
+  allTheGlobals.numberOfTimesToRun = 0;
   incrementDisplayCount();
   generateSequence();
 }
 
 function incrementDisplayCount(){
-  displayCount++;
-  $(".count-display").text(displayCount);
+  allTheGlobals.displayCount++;
+  $(".count-display").text(allTheGlobals.displayCount);
 }
 
 //event handlers for mousedown, mouseup
 function userInput(){
-  noBuzzerIfPressStart = false;
+  allTheGlobals.noBuzzerIfPressStart = false;
   var theBuzzer = setTimeout(function(){
     playBuzzer();
-    if (strict) {
+    if (allTheGlobals.strict) {
       return setTimeout(function(){
         newGame();
       },3000)
@@ -108,37 +119,37 @@ function userInput(){
     },3000)
     }
   },5000)
-  console.log("stop is: ", stop, "noBuzzerIfPressStart is: ", noBuzzerIfPressStart);
+  console.log("allTheGlobals.stop is: ", allTheGlobals.stop, "allTheGlobals.noBuzzerIfPressStart is: ", allTheGlobals.noBuzzerIfPressStart);
   setTimeout(function(){
-      if (stop || noBuzzerIfPressStart) {
+      if (allTheGlobals.stop || allTheGlobals.noBuzzerIfPressStart) {
         clearTimeout(theBuzzer);
       }
     },4999)
-  console.log("what I need to click", arrColors.slice(0,playBackCount -1))
+  console.log("what I need to click", allTheGlobals.arrColors.slice(0,allTheGlobals.playBackCount -1))
   $(".bttn").unbind("click").on("click", function(e){
     clearTimeout(theBuzzer);
     // e.stopPropagation();
     buttonPress($(this));
     // console.log($(this), e.target, this.className.split(" ")[0]);
-    userProgressCount++;
-    console.log("You clicked: ", userProgressCount, "times");
+    allTheGlobals.userProgressCount++;
+    console.log("You clicked: ", allTheGlobals.userProgressCount, "times");
     validate(this.className.split(" ")[0]);
   })
 }
 
 function validate(pressedButton) {
-  console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount);
-  // console.log("User Progress Count: ", userProgressCount, "Play Back Count: ", playBackCount, "Array of Colors: ", arrColors);
-  if (userProgressCount === playBackCount - 1 && pressedButton === arrColors[userProgressCount - 1].slice(1)) {
+  console.log("User Progress Count: ", allTheGlobals.userProgressCount, "Play Back Count: ", allTheGlobals.playBackCount);
+  // console.log("User Progress Count: ", allTheGlobals.userProgressCount, "Play Back Count: ", allTheGlobals.playBackCount, "Array of Colors: ", allTheGlobals.arrColors);
+  if (allTheGlobals.userProgressCount === allTheGlobals.playBackCount - 1 && pressedButton === allTheGlobals.arrColors[allTheGlobals.userProgressCount - 1].slice(1)) {
     console.log("guessed everything correctly");
     checkForHighScore();
-    if (userProgressCount === 20) {
+    if (allTheGlobals.userProgressCount === 20) {
       $(".count-display").text("Win!");
       return setTimeout(function(){
         newGame();
       },1000)
     }
-    numberOfTimesToRun++;
+    allTheGlobals.numberOfTimesToRun++;
     setTimeout(function(){
       incrementDisplayCount();
     }, 750)
@@ -146,17 +157,17 @@ function validate(pressedButton) {
       playCurrentSequenceSoFar();
     },1000)
   } 
-  else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
+  else if (pressedButton === allTheGlobals.arrColors[allTheGlobals.userProgressCount - 1].slice(1)) { //if correct but not finished
     checkForHighScore();
     userInput();
   } else {
     playBuzzer();
-    if (strict) {
+    if (allTheGlobals.strict) {
       return setTimeout(function(){
         newGame();
       },3000)
     }
-    userProgressCount--;
+    allTheGlobals.userProgressCount--;
     setTimeout(function(){
       playCurrentSequenceSoFar();
     },3000)
@@ -164,9 +175,9 @@ function validate(pressedButton) {
 }
 
 function checkForHighScore() {
-  if (userProgressCount > highScore) {
-    highScore = userProgressCount;
-    $(".high-score-num").text(userProgressCount);
+  if (allTheGlobals.userProgressCount > allTheGlobals.highScore) {
+    allTheGlobals.highScore = allTheGlobals.userProgressCount;
+    $(".high-score-num").text(allTheGlobals.userProgressCount);
   }
 }
 
@@ -177,44 +188,44 @@ function playBuzzer(){
 
 //show button press for entire sequence
 function playCurrentSequenceSoFar(){
-  console.log("Number of times to run: ", numberOfTimesToRun);
-  if (stop) {
+  console.log("Number of times to run: ", allTheGlobals.numberOfTimesToRun);
+  if (allTheGlobals.stop) {
       return;
     }
-  console.log("this is the whole sequence", arrColors);
-  playBackCount = 1;
+  console.log("this is the whole sequence", allTheGlobals.arrColors);
+  allTheGlobals.playBackCount = 1;
   function inner(buttonColor){
-    if (stop) {
+    if (allTheGlobals.stop) {
       return;
     }
     console.log("this is the current color", buttonColor);
-    // console.log("playback count: ", playBackCount, "numberOfTimesToRun: ", numberOfTimesToRun)
-    if (playBackCount > numberOfTimesToRun + 1) {
-      // console.log("Number of times to run: ", numberOfTimesToRun);
+    // console.log("playback count: ", allTheGlobals.playBackCount, "allTheGlobals.numberOfTimesToRun: ", allTheGlobals.numberOfTimesToRun)
+    if (allTheGlobals.playBackCount > allTheGlobals.numberOfTimesToRun + 1) {
+      // console.log("Number of times to run: ", allTheGlobals.numberOfTimesToRun);
       console.log("return here");
-      userProgressCount = 0;
-      console.log("User progress count: ", userProgressCount);
-      numberOfTimesToRun = playBackCount - 2; 
-      // playBackCount = 0;
+      allTheGlobals.userProgressCount = 0;
+      console.log("User progress count: ", allTheGlobals.userProgressCount);
+      allTheGlobals.numberOfTimesToRun = allTheGlobals.playBackCount - 2; 
+      // allTheGlobals.playBackCount = 0;
       return userInput();
     }
     buttonPress(buttonColor); 
-    playBackCount++;
+    allTheGlobals.playBackCount++;
     var incrementSpeed = determineIncrementSpeed();
     setTimeout(function(){
-      inner(arrColors[playBackCount-1])
+      inner(allTheGlobals.arrColors[allTheGlobals.playBackCount-1])
     },incrementSpeed)
   }
   $(".bttn").unbind("click") //prevents me from clicking buttons while sequence is played
-  inner(arrColors[playBackCount-1]);
+  inner(allTheGlobals.arrColors[allTheGlobals.playBackCount-1]);
 }
 
 function determineIncrementSpeed(){
-  if (numberOfTimesToRun + 1 >= 13) {
+  if (allTheGlobals.numberOfTimesToRun + 1 >= 13) {
     return 400;
-  } else if (numberOfTimesToRun + 1 >= 9) {
+  } else if (allTheGlobals.numberOfTimesToRun + 1 >= 9) {
     return 600;
-  } else if (numberOfTimesToRun + 1 >= 5) {
+  } else if (allTheGlobals.numberOfTimesToRun + 1 >= 5) {
     return 800;
   } else {
     return 1000;
@@ -255,15 +266,15 @@ function buttonPress(color) {
   }
   console.log("This color comes into button press", color);
   $(color).css("opacity", 1)
-  if (numberOfTimesToRun + 1 >= 9) {
+  if (allTheGlobals.numberOfTimesToRun + 1 >= 9) {
     setTimeout(function(){
     $(color).css("opacity", .75);  
   }, 200); //400
-  } else if (numberOfTimesToRun + 1 >= 9) {
+  } else if (allTheGlobals.numberOfTimesToRun + 1 >= 9) {
     setTimeout(function(){
     $(color).css("opacity", .75);  
   }, 300); //600
-  } else if (numberOfTimesToRun + 1 >= 5) {
+  } else if (allTheGlobals.numberOfTimesToRun + 1 >= 5) {
     setTimeout(function(){
     $(color).css("opacity", .75);  
   }, 400); //800
@@ -275,11 +286,11 @@ function buttonPress(color) {
 }
 
 function determinePlayBackSoundSpeed(){
-  if (numberOfTimesToRun + 1 >= 13) {
+  if (allTheGlobals.numberOfTimesToRun + 1 >= 13) {
       return 2.5;
-    } else if (numberOfTimesToRun + 1 >= 9) {
+    } else if (allTheGlobals.numberOfTimesToRun + 1 >= 9) {
       return 1.66666666666666;
-    } else if (numberOfTimesToRun + 1 >= 5) {
+    } else if (allTheGlobals.numberOfTimesToRun + 1 >= 5) {
       return 1.25
     } else {
       return 1;
@@ -295,24 +306,24 @@ function generateSequence(){
 }
 
 function convertNumsToColor(sequenceOfNums){
-  arrColors = [];
+  allTheGlobals.arrColors = [];
   for (var i = 0; i < sequenceOfNums.length; i++){
     switch (sequenceOfNums[i]){
       case 1:
-        arrColors.push(".red-button")
+        allTheGlobals.arrColors.push(".red-button")
         break;
       case 2:
-        arrColors.push(".green-button")
+        allTheGlobals.arrColors.push(".green-button")
         break;
       case 3:
-        arrColors.push(".blue-button")
+        allTheGlobals.arrColors.push(".blue-button")
         break;
       default:
-        arrColors.push(".yellow-button")
+        allTheGlobals.arrColors.push(".yellow-button")
     }
   }
-  $(".bob").html(arrColors);
-  playCurrentSequenceSoFar(arrColors);
+  $(".bob").html(allTheGlobals.arrColors);
+  playCurrentSequenceSoFar(allTheGlobals.arrColors);
 }
 
 function toggleStrict(){
@@ -322,13 +333,13 @@ function toggleStrict(){
   if (backgroundColor == "rgb(34, 34, 34)") { //same as #222
     // console.log("strict-light background is almost black")
     $(".strict-light").css("background", "red");
-    strict = true;
-    console.log("strict is: ", strict);
+    allTheGlobals.strict = true;
+    console.log("allTheGlobals.strict is: ", allTheGlobals.strict);
     // enterStrictMode(); 
   } else {
     $(".strict-light").css("background", "#222");
-    strict = false;
-    console.log("strict is: ", strict);
+    allTheGlobals.strict = false;
+    console.log("allTheGlobals.strict is: ", allTheGlobals.strict);
   } // strict light is red and strict mode is on
 }
 
