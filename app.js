@@ -26,6 +26,7 @@ var arrColors = [];
 var numberOfTimesToRun = 0;
 var displayCount = 0;
 var stop = false;
+var strict = false;
 // incrementDisplayCount();
 // generateSequence();
 
@@ -47,6 +48,7 @@ function off(){
   $(".count-display").text("");
   $(".bttn").unbind();
   stop = true;
+  strict = false;
   // clearTimeout(stillRunning);
 }
 
@@ -116,6 +118,11 @@ function validate(pressedButton) {
   else if (pressedButton === arrColors[userProgressCount - 1].slice(1)) { //if correct but not finished
     // userInput();
   } else {
+    if (strict) {
+      return setTimeout(function(){
+        newGame();
+      },1000)
+    }
     userProgressCount--;
     setTimeout(function(){
       playCurrentSequenceSoFar();
@@ -222,9 +229,13 @@ function toggleStrict(){
   if (backgroundColor == "rgb(34, 34, 34)") { //same as #222
     // console.log("strict-light background is almost black")
     $(".strict-light").css("background", "red");
+    strict = true;
+    console.log("strict is: ", strict);
     // enterStrictMode(); 
   } else {
     $(".strict-light").css("background", "#222");
+    strict = false;
+    console.log("strict is: ", strict);
   } // strict light is red and strict mode is on
 }
 
